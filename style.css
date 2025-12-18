@@ -96,6 +96,10 @@ body {
 .clear {
     background: var(--clear);
 }
+.delete {
+    background: #f59e0b; /* amber/orange */
+}
+
 
 @media(max-width: 500px) {
     .calculator {

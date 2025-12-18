@@ -23,6 +23,8 @@
     <div class="display" id="display">0</div>
 
     <div class="buttons">
+      <button class="btn delete" onclick="deleteLast()">DEL</button>
+
       <button class="btn clear" onclick="clearAll()">C</button>
       <button class="btn" onclick="percent()">%</button>
       <button class="btn" onclick="input('(')">(</button>
@@ -67,11 +69,18 @@
       display.textContent = expression;
     }
 
+
     /* Clear */
     function clearAll() {
       expression = "";
       display.textContent = "0";
     }
+    /* Delete Last Character */
+    function deleteLast() {
+      expression = expression.slice(0, -1);
+      display.textContent = expression || "0";
+    }
+
 
     /* Percentage */
     function percent() {
