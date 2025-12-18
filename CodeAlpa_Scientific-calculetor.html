@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Scientific Calculator</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+  </style>
+</head>
+
+<body>
+
+  <div class="calculator" id="calculator">
+    <div class="top">
+      <strong style="color:var(--text)">Calculator</strong>
+      <button class="toggle" onclick="toggleTheme()">🌙 / ☀️</button>
+    </div>
+
+    <div class="display" id="display">0</div>
+
+    <div class="buttons">
+      <button class="btn clear" onclick="clearAll()">C</button>
+      <button class="btn" onclick="percent()">%</button>
+      <button class="btn" onclick="input('(')">(</button>
+      <button class="btn" onclick="input(')')">)</button>
+      <button class="btn operator" onclick="input('/')">÷</button>
+
+      <button class="btn" onclick="scientific('sin')">sin</button>
+      <button class="btn" onclick="scientific('cos')">cos</button>
+      <button class="btn" onclick="scientific('tan')">tan</button>
+      <button class="btn" onclick="scientific('sqrt')">√</button>
+      <button class="btn operator" onclick="input('*')">×</button>
+
+      <button class="btn" onclick="input('7')">7</button>
+      <button class="btn" onclick="input('8')">8</button>
+      <button class="btn" onclick="input('9')">9</button>
+      <button class="btn" onclick="scientific('log')">log</button>
+      <button class="btn operator" onclick="input('-')">−</button>
+
+      <button class="btn" onclick="input('4')">4</button>
+      <button class="btn" onclick="input('5')">5</button>
+      <button class="btn" onclick="input('6')">6</button>
+      <button class="btn" onclick="scientific('ln')">ln</button>
+      <button class="btn operator" onclick="input('+')">+</button>
+
+      <button class="btn" onclick="input('1')">1</button>
+      <button class="btn" onclick="input('2')">2</button>
+      <button class="btn" onclick="input('3')">3</button>
+      <button class="btn" onclick="input('.')">.</button>
+      <button class="btn equal" onclick="calculate()">=</button>
+
+      <button class="btn" onclick="input('0')" style="grid-column: span 5;">0</button>
+    </div>
+  </div>
+
+  <script>
+    let display = document.getElementById("display");
+    let expression = "";
+
+    /* Input */
+    function input(val) {
+      expression += val;
+      display.textContent = expression;
+    }
+
+    /* Clear */
+    function clearAll() {
+      expression = "";
+      display.textContent = "0";
+    }
+
+    /* Percentage */
+    function percent() {
+      expression = (eval(expression) / 100).toString();
+      display.textContent = expression;
+    }
+
+    /* Scientific */
+    function scientific(fn) {
+      try {
+        let value = eval(expression);
+        switch (fn) {
+          case "sin": expression = Math.sin(value); break;
+          case "cos": expression = Math.cos(value); break;
+          case "tan": expression = Math.tan(value); break;
+          case "sqrt": expression = Math.sqrt(value); break;
+          case "log": expression = Math.log10(value); break;
+          case "ln": expression = Math.log(value); break;
+        }
+        display.textContent = expression;
+      } catch {
+        display.textContent = "Error";
+        expression = "";
+      }
+    }
+
+    /* Calculate */
+    function calculate() {
+      try {
+        expression = eval(expression).toString();
+        display.textContent = expression;
+      } catch {
+        display.textContent = "Error";
+        expression = "";
+      }
+    }
+
+    /* Theme Toggle */
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+    }
+
+    /* Keyboard Support */
+    document.addEventListener("keydown", (e) => {
+      if ("0123456789+-*/().".includes(e.key)) input(e.key);
+      if (e.key === "Enter") calculate();
+      if (e.key === "Backspace") {
+        expression = expression.slice(0, -1);
+        display.textContent = expression || "0";
+      }
+      if (e.key === "Escape") clearAll();
+    });
+  </script>
+
+</body>
+
+</html>
